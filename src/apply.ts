@@ -22,7 +22,7 @@ export function remove<
 	V = At<T, P>
 >(
   obj: T,
-  path: P extends Path<T, P> ? (V extends any | undefined ? Path<T, P> : never) : Path<T, P>,
+  path: P extends Path<T, P> ? (V extends undefined ? P : never) : Path<T, P>,
 ): T {
   return R.dissocPath(path as Key[], obj) as any;
 }
@@ -40,7 +40,7 @@ export function move<
     : Path<T, To>,
 ): T {
   const val = get(obj, from as any);
-  const deleted = remove(obj, from);
+  const deleted = remove(obj, from as any);
   return set(deleted, to as any, val);
 }
 
@@ -69,7 +69,7 @@ export function apply<T extends object, P extends Key[], P2 extends Key[]>(
     case 'set':
       	return set(obj, op.path as any, op.value)
     case 'remove':
-      	return remove(obj, op.path)
+      	return remove(obj, op.path as any)
     case 'move':
       	return move(obj, op.from as any, op.to as any)
 	case 'swap':

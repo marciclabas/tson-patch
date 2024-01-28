@@ -13,7 +13,7 @@ export type User = {
     id: string;
     name: {
         first: string;
-        last: string;
+        last?: string;
     }
     friends: {
         [topic: string]: Array<{ name: string }>
@@ -52,10 +52,9 @@ tp.set(user, ['friends', 'chess', 0, 'name'], {name: 'Oops'}) // COMPILE ERROR (
 
 ### Remove
 
-Remove is troublesome. A non-nullable property can be removed
-
 ```typescript
-tp.remove(user, ['id'])
+tp.remove(user, ['id']) // COMPILE ERROR ('id' is not nullable)
+tp.remove(user, ['name', 'last']) // '<User but without last name>'
 ```
 
 ### Move
