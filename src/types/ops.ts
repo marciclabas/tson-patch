@@ -1,9 +1,12 @@
 import { Path, At, Key } from "./paths"
 
-export type Set<T extends object, P extends Key[]> = {
+export type Set<
+    T extends object,
+    P extends Key[]
+> = {
     op: 'set'
     path: P extends Path<T, P> ? P : Path<T, P>
-    value: At<T, Path<T, P>>
+    value: P extends Path<T, P> ? At<T, P> : never
 }
 
 export type Remove<T extends object, P extends Key[]> = {

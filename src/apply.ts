@@ -5,7 +5,7 @@ export function get<T extends object, P extends Key[]>(
   obj: T,
   path: P extends Path<T, P> ? P : Path<T, P>,
 ): At<T, P> {
-  return R.path(path, obj) as any;
+  return R.path(path as P, obj) as any;
 }
 
 export function set<T extends object, P extends Key[]>(
@@ -13,7 +13,7 @@ export function set<T extends object, P extends Key[]>(
   path: P extends Path<T, P> ? P : Path<T, P>,
   value: At<T, P>,
 ): T {
-  return R.assocPath(path, value, obj) as any;
+  return R.assocPath(path as P, value, obj) as any;
 }
 
 export function remove<
@@ -24,7 +24,7 @@ export function remove<
   obj: T,
   path: P extends Path<T, P> ? (V extends any | undefined ? Path<T, P> : never) : Path<T, P>,
 ): T {
-  return R.dissocPath(path, obj) as any;
+  return R.dissocPath(path as Key[], obj) as any;
 }
 
 export function move<
@@ -40,7 +40,7 @@ export function move<
     : Path<T, To>,
 ): T {
   const val = get(obj, from as any);
-  const deleted = remove(obj, from as any);
+  const deleted = remove(obj, from);
   return set(deleted, to as any, val);
 }
 
@@ -57,8 +57,8 @@ export function swap<
 ): T {
   const val1 = get(obj, path1);
   const val2 = get(obj, path2);
-  const obj1 = R.assocPath(path2, val1, obj);
-  return R.assocPath(path1, val2, obj1);
+  const obj1 = R.assocPath(path2 as Key[], val1, obj);
+  return R.assocPath(path1 as Key[], val2, obj1);
 }
 
 export function apply<T extends object, P extends Key[], P2 extends Key[]>(
@@ -69,7 +69,7 @@ export function apply<T extends object, P extends Key[], P2 extends Key[]>(
     case 'set':
       	return set(obj, op.path as any, op.value)
     case 'remove':
-      	return remove(obj, op.path as any)
+      	return remove(obj, op.path)
     case 'move':
       	return move(obj, op.from as any, op.to as any)
 	case 'swap':
