@@ -76,3 +76,9 @@ export function apply<T extends object, P extends Key[], P2 extends Key[]>(
 		return swap(obj, op.path1 as any, op.path2 as any)
   }
 }
+
+export function applies<T extends object, P extends (unknown & Key)[], P2 extends (unknown & Key)[]>(
+  obj: T, ops: Op<T, P, P2>[]
+): T {
+  return ops.reduce(apply, obj)
+}

@@ -44,3 +44,8 @@ export type Op<T extends object, P extends Key[], P2 extends Key[]>
     | Remove<T, P>
     | Move<T, P, P2>
     | Swap<T, P, P2>
+
+/** Curried function to make ops of a given type `T`. Can be used wherever an `Op<T, _, _>` is required */
+export const op =
+    <T extends object>() =>
+    <P extends Key[], P2 extends Key[]>(op: Op<T, P, P2>) => op

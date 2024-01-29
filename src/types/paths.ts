@@ -18,7 +18,24 @@ export type At<T, P extends Key[]> =
       ? Ks extends Key[]
           ? K extends keyof T ? At<T[K], Ks> :
             K extends keyof NonNullable<T> ? At<NonNullable<T>[K] | undefined, Ks>
-            : never
-          : never
-      : never
-      
+            : any
+          : any
+      : any
+    
+/** Curried function to make a path of a given type `T`. Can be used wherever `Path<T, _>` is required.
+ * 
+ * Example:
+ * ```
+ * const path = tp.path<MyType>()(['valid', 'path', 'of', 'my', 'type'])
+ * ```
+ * 
+ * Or, to make a path-making function:
+ * ```
+ * const userPath = tp.path<User>()
+ * const path = userPath(['valid', 'user', 'path'])
+ * ```
+ * 
+*/
+export const path =
+  <T extends object>() =>
+  <P extends Key[]>(path: P extends Path<T, P> ? P : Path<T, P>) => path
