@@ -21,7 +21,7 @@ export type Move<
     FromType = At<T, From>,
     ToType = At<T, To>
 > = {
-    op: 'move'
+    op: 'move' | 'copy'
     from: From extends Path<T, From> ? From : never
     to: To extends Path<T, To> ? (FromType extends ToType ? To : never) : Path<T, To>
 }
