@@ -26,7 +26,7 @@ export function remove<
   obj: T,
   path: P extends Path<T, P> ? (V extends undefined ? P : never) : Path<T, P>,
 ): T {
-  return R.assocPath(path as Key[], undefined, obj) as any;
+  return R.dissocPath(path as Key[], obj) as any;
 }
 
 export function copy<
