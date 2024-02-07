@@ -1,6 +1,5 @@
-import { applies } from "./apply"
-import { op } from "./types/ops"
-import * as R from 'ramda'
+import { applies } from "../src/apply"
+import { op } from "../src/types/ops"
 
 type Game = {
     players: Array<{
@@ -38,7 +37,26 @@ const ops2 = [
     gameOp({op: 'move', from: ['random1'] as any, to: ['players', 0, 'sheets', 1]}),
 ]
 
-const newGame = applies(game, ops)
-console.log('New', newGame)
-const newerGame = applies(newGame, ops2)
-console.log('Newer', newerGame)
+describe('Double Copy', () => {
+    it('should equal', () => {
+        const expected = {
+            players: [
+                {
+                    sheets: [
+                        { uuid: '0, 0' },
+                        { uuid: '0, 1' },
+                    ]
+                },
+                {
+                    sheets: [
+                        { uuid: '1, 0' },
+                        { uuid: '1, 1' },
+                    ]
+                }
+            ],
+            random0: { uuid: '0, 1' },
+            random1: { uuid: '1, 0' }
+        }
+        expect(applies(game, ops)).toStrictEqual(expected)
+    })
+})

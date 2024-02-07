@@ -17,6 +17,7 @@ export function set<T extends object, P extends Key[]>(
   return R.assocPath(path as P, value, obj) as any;
 }
 
+/** Sets `path` to `undefined` */
 export function remove<
   T extends object,
   P extends Key[],
@@ -25,7 +26,7 @@ export function remove<
   obj: T,
   path: P extends Path<T, P> ? (V extends undefined ? P : never) : Path<T, P>,
 ): T {
-  return R.dissocPath(path as Key[], obj) as any;
+  return R.assocPath(path as Key[], undefined, obj) as any;
 }
 
 export function copy<

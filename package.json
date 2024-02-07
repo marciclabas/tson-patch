@@ -1,21 +1,22 @@
 {
-				"name": "tson-patch",
-				"version": "1.1.0",
-				"description": "Statically typed JSON Patch",
-				"main": "dist/index.js",
-				"scripts": {
-								"build": "npx tsc -p tsconfig.json",
-								"init": "npm install --save-dev typescript",
-								"react": "npm i react react-dom && npm install @types/react @types/react-dom --save-dev"
-				},
-				"author": "Marcel Claramunt",
-				"license": "ISC",
-				"devDependencies": {
-								"typescript": "^5.3.3"
-				},
-				"dependencies": {
-								"@types/ramda": "^0.29.10",
-								"ramda": "^0.29.1",
-								"tson-patch": "^1.0.1"
-				}
+	"name": "tson-patch",
+	"version": "1.1.1",
+	"description": "Statically typed JSON Patch",
+	"main": "dist/index.js",
+	"scripts": {
+		"build": "npx tsc -p tsconfig.json",
+		"test": "jest --expand"
+	},
+	"author": "Marcel Claramunt",
+	"license": "ISC",
+	"devDependencies": {
+		"@types/jest": "^29.5.12",
+		"@types/ramda": "^0.29.10",
+		"jest": "^29.7.0",
+		"ts-jest": "^29.1.2",
+		"typescript": "^5.3.3"
+	},
+	"dependencies": {
+		"ramda": "^0.29.1"
+	}
 }
