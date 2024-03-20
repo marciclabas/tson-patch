@@ -1,4 +1,4 @@
-import { Key, Op } from "./types";
+import { Key, Op } from "./types/index.js";
 
 export function path<P extends Key[]>(path: P): string {
   return `/${path.join('/')}`

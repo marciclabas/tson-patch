@@ -1,2 +1,2 @@
-export * from './ops'
-export * from './paths'
+export * from './ops.js'
+export * from './paths.js'

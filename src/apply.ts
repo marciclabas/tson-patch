@@ -1,6 +1,6 @@
 import * as R from "ramda";
-import { At, Key, Path } from "./types/paths";
-import { Op } from "./types/ops";
+import { At, Key, Path } from "./types/paths.js";
+import { Op } from "./types/ops.js";
 
 export function get<T extends object, P extends Key[]>(
   obj: T,

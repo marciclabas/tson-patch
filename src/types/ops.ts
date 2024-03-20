@@ -1,4 +1,4 @@
-import { Path, At, Key } from "./paths"
+import { Path, At, Key } from "./paths.js"
 
 export type Set<
     T extends object,

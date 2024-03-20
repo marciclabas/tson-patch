@@ -11,6 +11,7 @@ export type Path<T, P extends Key[]> =
       : [Extract<keyof T, Key>]     // (to suggest types)
     : never
 
+/** */
 export type At<T, P extends Key[]> =
   P extends [keyof T] ? T[P[0]] :
   P extends [keyof NonNullable<T>] ? NonNullable<T>[P[0]] | undefined :

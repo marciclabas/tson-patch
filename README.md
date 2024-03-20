@@ -2,69 +2,60 @@
 
 > Statically typed JSON Patch operations
 
-## API
+## Usage
 
-Setup:
+You have some kind of nested data that you want to work with. It could look something like this:
+
+```typescript
+export type User = {
+	id: string;
+	name: {
+		first: string;
+		last?: string;
+	}
+	friends: {
+		[from: string]: Array<{ name: string }>
+	}
+};
+```
+
+A mess to work with, right? Not anymore:
+
+### Basic operations
+
+All operations are pure and return shallow copies
+
+#### Get
 
 ```typescript
 import * as tp from 'tson-patch'
-
-export type User = {
-    id: string;
-    name: {
-        first: string;
-        last?: string;
-    }
-    friends: {
-        [topic: string]: Array<{ name: string }>
-    }
-};
-
-export const user: User = {
-    id: "userId",
-    name: {
-        first: "Marsh",
-        last: "Mellow",
-    },
-    friends: {
-        chess: [
-            { name: "Magnus" },
-            { name: "Fabi" },
-        ],
-    },
-};
+tp.get(user, ['friends', 'college', 0, 'name']) // Compiles just fine
+tp.get(user, ['friends', 'college', 0, 'age']) // COMPILE ERROR: 'age' doesn't exist in 'name'
 ```
 
-### Get
+#### Set
 
 ```typescript
-tp.get(user, ['friends', 'chess', 0, 'name']) // 'Magnus'
-tp.get(user, ['friends', 'chess', 0, 'elo']) // COMPILE ERROR: 'elo' doesn't exist in 'name'
+tp.set(user, ['friends', 'college', 0, 'name'], 'John') // Now `user.friends.chess[0].name === 'John'`
+tp.set(user, ['friends', 'college', 0], {name: 'John'}) // Exactly the same
+tp.set(user, ['friends', 'college', 0, 'name'], {name: 'Oops'}) // COMPILE ERROR (types don't match)
 ```
 
-### Set
-
-```typescript
-tp.set(user, ['friends', 'chess', 0, 'name'], 'Ian') // '<User but with 'Ian' instead of 'Magnus'>
-tp.set(user, ['friends', 'chess', 0], {name: 'Ian'}) // Exactly the same
-tp.set(user, ['friends', 'chess', 0, 'name'], {name: 'Oops'}) // COMPILE ERROR (types don't match)
-```
-
-### Remove
+#### Remove
 
 ```typescript
 tp.remove(user, ['id']) // COMPILE ERROR ('id' is not nullable)
 tp.remove(user, ['name', 'last']) // '<User but without last name>'
 ```
 
-### Move
+#### Move
 
 ```typescript
-tp.move(user, ['id'], ['friends', 'chess']) // COMPILE ERROR (Types don't match)
-tp.move(user, ['id'], ['friends', 'chess', 0, 'name']) // OK
+tp.move(user, ['id'], ['friends', 'college']) // COMPILE ERROR (Types don't match)
+tp.move(user, ['id'], ['friends', 'college', 0, 'name']) // OK
 ```
 
-### Swap
+#### Swap
 
 ```typescript
 tp.swap(user, ['id'], ['friends', 'chess']) // COMPILE ERROR (Types don't match)
