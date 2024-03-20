@@ -1,6 +1,6 @@
 {
 	"name": "tson-patch",
-	"version": "1.1.4",
+	"version": "1.1.6",
 	"description": "Statically typed JSON Patch",
 	"main": "dist/index.js",
 	"type": "module",

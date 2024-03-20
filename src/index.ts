@@ -1,4 +1,5 @@
-export * from './types/index.js'
-export * from './apply.js'
+export type { At, Key, Move, Op, Path, Remove, Set, Swap } from './types/index.js'
+export { op, path } from './types/index.js'
+export { applies, apply, copy, get, move, remove, set, swap } from './apply.js'
 export * as stringify from './stringify.js'
-export * from './util/index.js'
+export { setter } from './util/index.js'
